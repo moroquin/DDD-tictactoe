@@ -1,0 +1,25 @@
+# Maven build output
+target/
+
+# IDE-specific files (examples)
+.idea/
+.classpath
+.project
+.settings/
+*.iml
+*.iws
+*.ipr
+
+# Class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Log files
+*.log
+
+# Temporary files
+*~
