@@ -1,5 +1,6 @@
 package tictactoe.player;
 
+import tictactoe.board.Coordinate;
 import tictactoe.board.Mark;
 
 public class Player {
@@ -16,6 +17,11 @@ public class Player {
     public String getName() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getName'");
+    }
+
+    public Coordinate getMove() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMove'");
     }
 
 }

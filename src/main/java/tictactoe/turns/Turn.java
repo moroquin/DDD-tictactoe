@@ -24,9 +24,9 @@ public class Turn {
         while (error) {
             console.printText("\n\nPlayer " + currentPlayer.getMark() + " turn");
             board.printBoard();
-            int row = console.readIntInRange("Enter row: ", 0, 2);
-            int col = console.readIntInRange("Enter column: ", 0, 2);
-            tictactoe.board.Coordinate coordinate = new tictactoe.board.Coordinate(row, col);
+            // el turno no puede pedirle al jugador su tiro, el jugador lo debe de hacer
+
+            tictactoe.board.Coordinate coordinate = currentPlayer.getMove();
             try {
                 // board.setMark(row, col, currentPlayer.getMark());
                 board.setMark(coordinate, currentPlayer.getMark());
