@@ -16,13 +16,17 @@ public class Game {
     }
 
     public void play() {
-        while (!board.isGameOver()) {
-            turn.takeTurn();
+        turn.play();
+        if (turn.isATie()){
+            console.printSuccess("It's a tie!");
+            return;
         }
+        
         tictactoe.player.Player winner = turn.getWinner();
         console.printSuccess("Player " + winner.getMark() + " wins!");
         console.printSuccess("Player " + winner.getName() + " wins!");
         console.printSuccess("Game over!");
+        
     }
 
 }

@@ -8,7 +8,7 @@ public class Player {
         // TODO Auto-generated constructor stub
     }
 
-    public String getMark() {
+    public Mark getMark() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getMark'");
     }
