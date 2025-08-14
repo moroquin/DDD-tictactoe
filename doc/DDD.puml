@@ -1,0 +1,59 @@
+@startuml
+skinparam rectangle {
+  BorderColor black
+  BackgroundColor white
+}
+
+' Main game
+rectangle "TicTacToe\nGame" as Game
+
+' First row
+rectangle "Turns" as Turns
+rectangle "Block:\nOther players'\nattempt to win" as Block
+
+' Second row
+rectangle "Board" as Board
+rectangle "Alternate" as Alternate
+rectangle "Winner" as Winner
+rectangle "Player" as Player
+rectangle "Goal" as Goal
+
+' Third row
+rectangle "3x3" as ThreeByThree
+rectangle "Square" as Square
+rectangle "Put" as Put
+rectangle "Win:\nRow - column\nDiagonal - Inv Diagonal" as Win
+
+' Fourth row
+rectangle "Marks" as Marks
+rectangle "Coordinate" as Coordinate
+
+' Fifth row
+rectangle "X" as MarkX
+rectangle "O" as MarkO
+rectangle "Empty" as Empty
+rectangle "X" as CoordX
+rectangle "Y" as CoordY
+
+' Connections
+Game -- Turns
+Turns "2" -- Player
+Game -- Block
+Game -- Board
+Turns -- Alternate
+Alternate ..> Winner : Use
+Player -- Goal
+Goal -- Block
+Goal -- Win
+Player -- Put
+Put ..> Coordinate : Use
+Coordinate -- CoordX
+Coordinate -- CoordY
+Board -- ThreeByThree
+ThreeByThree -- Square
+Square -- Marks
+Marks <|-- MarkX
+Marks <|-- MarkO
+Marks <|-- Empty
+
+@enduml
