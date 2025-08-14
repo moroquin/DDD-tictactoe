@@ -10,8 +10,8 @@ public class Game {
 
     public Game() {
         this.board = new tictactoe.board.Board();
-        this.player1 = new tictactoe.player.Player(tictactoe.player.Mark.X);
-        this.player2 = new tictactoe.player.Player(tictactoe.player.Mark.O);
+        this.player1 = new tictactoe.player.Player(tictactoe.board.Mark.X);
+        this.player2 = new tictactoe.player.Player(tictactoe.board.Mark.O);
         this.turn = new tictactoe.turns.Turn(player1, player2, board);
     }
 
@@ -20,9 +20,9 @@ public class Game {
             turn.takeTurn();
         }
         tictactoe.player.Player winner = turn.getWinner();
-        console.clearConsole("Player " + winner.getMark() + " wins!");
-        console.clearConsole("Player " + winner.getName() + " wins!");
+        console.printSuccess("Player " + winner.getMark() + " wins!");
+        console.printSuccess("Player " + winner.getName() + " wins!");
         console.printSuccess("Game over!");
     }
-    
+
 }
