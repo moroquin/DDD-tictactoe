@@ -1,59 +1,146 @@
-@startuml
-skinparam rectangle {
-  BorderColor black
-  BackgroundColor white
+@startuml DDD
+!theme plain
+
+package "tictactoe" {
+    class Main {
+        +main(String[] args): void
+    }
 }
 
-' Main game
-rectangle "TicTacToe\nGame" as Game
+package "tictactoe.game" {
+    class Game {
+        -board: Board
+        -player1: Player
+        -player2: Player
+        -turn: Turn
+        -console: ConsoleUtils
+        +Game()
+        +play(): void
+    }
+}
 
-' First row
-rectangle "Turns" as Turns
-rectangle "Block:\nOther players'\nattempt to win" as Block
+package "tictactoe.board" {
+    class Board {
+        -squares: Mark[][]
+        +Board()
+        +printBoard(): void
+        +getBoard(): Mark[][]
+        +isGameOver(): boolean
+        +hasWinner(): boolean
+        +getWinner(): Mark
+        +setMark(coordinate: Coordinate, mark: Mark): void
+        -checkRows(): boolean
+        -checkColumns(): boolean
+        -checkDiagonals(): boolean
+        -isBoardFull(): boolean
+        -getWinnerFromRows(): Mark
+        -getWinnerFromColumns(): Mark
+        -getWinnerFromDiagonals(): Mark
+    }
 
-' Second row
-rectangle "Board" as Board
-rectangle "Alternate" as Alternate
-rectangle "Winner" as Winner
-rectangle "Player" as Player
-rectangle "Goal" as Goal
+    enum Mark {
+        X("X")
+        O("O")
+        EMPTY("_")
+        -value: String
+        +toString(): String
+    }
 
-' Third row
-rectangle "3x3" as ThreeByThree
-rectangle "Square" as Square
-rectangle "Put" as Put
-rectangle "Win:\nRow - column\nDiagonal - Inv Diagonal" as Win
+    class Coordinate {
+        -row: int
+        -col: int
+        +Coordinate(row: int, col: int)
+        +getRow(): int
+        +getCol(): int
+    }
+}
 
-' Fourth row
-rectangle "Marks" as Marks
-rectangle "Coordinate" as Coordinate
+package "tictactoe.player" {
+    class Player {
+        -mark: Mark
+        -name: String
+        -console: ConsoleUtils
+        +Player(mark: Mark)
+        +getMark(): Mark
+        +getName(): String
+        +getMove(): Coordinate
+    }
+}
 
-' Fifth row
-rectangle "X" as MarkX
-rectangle "O" as MarkO
-rectangle "Empty" as Empty
-rectangle "X" as CoordX
-rectangle "Y" as CoordY
+package "tictactoe.turns" {
+    class Turn {
+        -player1: Player
+        -player2: Player
+        -board: Board
+        -currentPlayer: Player
+        -console: ConsoleUtils
+        +Turn(player1: Player, player2: Player, board: Board)
+        +getWinner(): Player
+        +play(): void
+        +isATie(): boolean
+        +switchPlayer(): void
+        -takeTurn(): void
+        -getFirstPlayer(): Player
+    }
+}
 
-' Connections
-Game -- Turns
-Turns "2" -- Player
-Game -- Block
-Game -- Board
-Turns -- Alternate
-Alternate ..> Winner : Use
-Player -- Goal
-Goal -- Block
-Goal -- Win
-Player -- Put
-Put ..> Coordinate : Use
-Coordinate -- CoordX
-Coordinate -- CoordY
-Board -- ThreeByThree
-ThreeByThree -- Square
-Square -- Marks
-Marks <|-- MarkX
-Marks <|-- MarkO
-Marks <|-- Empty
+package "tictactoe.utilities" {
+    class ConsoleUtils <<Singleton>> {
+        -scanner: Scanner
+        -{static} instance: ConsoleUtils
+        -ConsoleUtils()
+        +{static} getInstance(): ConsoleUtils
+        +readString(prompt: String): String
+        +readString(): String
+        +readInt(prompt: String): int
+        +readIntInRange(prompt: String, min: int, max: int): int
+        +readDouble(prompt: String): double
+        +readBoolean(prompt: String): boolean
+        +printTitle(title: String): void
+        +printTitle(title: String, color: String): void
+        +printText(text: String): void
+        +printText(text: String, color: String): void
+        +print(text: String): void
+        +printSuccess(message: String): void
+        +printError(message: String): void
+        +printWarning(message: String): void
+        +printInfo(message: String): void
+        +printSeparator(): void
+        +printSeparator(character: char, length: int): void
+        +printNewLines(lines: int): void
+        +clearConsole(): void
+        +waitForEnter(): void
+        +close(): void
+    }
+}
+
+' Relaciones principales
+Main --> Game : creates
+
+' Composición - Game contiene estos objetos
+Game *-- Board : composition
+Game *-- Player : composition
+Game *-- Turn : composition
+
+' Uso de ConsoleUtils (Singleton)
+Game --> ConsoleUtils : uses
+Turn --> ConsoleUtils : uses
+Player --> ConsoleUtils : uses
+
+' Turn maneja jugadores y tablero
+Turn o-- Player : aggregation
+Turn o-- Board : aggregation
+
+' Uso de tipos de dominio
+Player --> Mark : uses
+Player --> Coordinate : creates
+Board --> Mark : uses
+Board --> Coordinate : uses
+Turn --> Mark : uses
+
+' Dependencias
+Turn ..> Mark : depends on
+Player ..> Mark : depends on
+Board ..> Mark : depends on
 
 @enduml
