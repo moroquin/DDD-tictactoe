@@ -2,8 +2,6 @@ package tictactoe.board;
 
 import java.util.Arrays;
 
-import tictactoe.player.Player;
-
 public class Board {
 
     private Mark[][] squares;

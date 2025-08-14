@@ -20,17 +20,22 @@ public class Turn {
     }
 
     private void takeTurn() {
-        console.printText("\n\nPlayer " + currentPlayer.getMark() + " turn");
-        board.printBoard();
-        int row = console.readIntInRange("Enter row: ", 0, 2);
-        int col = console.readIntInRange("Enter column: ", 0, 2);
-        tictactoe.board.Coordinate coordinate = new tictactoe.board.Coordinate(row, col);
-        try {
-            // board.setMark(row, col, currentPlayer.getMark());
-            board.setMark(coordinate, currentPlayer.getMark());
-        } catch (IllegalArgumentException e) {
-            console.printError(e.getMessage());
-            takeTurn();
+        boolean error = true;
+        while (error) {
+            console.printText("\n\nPlayer " + currentPlayer.getMark() + " turn");
+            board.printBoard();
+            int row = console.readIntInRange("Enter row: ", 0, 2);
+            int col = console.readIntInRange("Enter column: ", 0, 2);
+            tictactoe.board.Coordinate coordinate = new tictactoe.board.Coordinate(row, col);
+            try {
+                // board.setMark(row, col, currentPlayer.getMark());
+                board.setMark(coordinate, currentPlayer.getMark());
+                error = false;
+            } catch (IllegalArgumentException e) {
+                console.printError(e.getMessage());
+                takeTurn();
+                error = true;
+            }
         }
     }
 
